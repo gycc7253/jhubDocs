@@ -1,0 +1,32 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  annotations:
+    meta.helm.sh/release-name: jhub
+    meta.helm.sh/release-namespace: jhub
+  creationTimestamp: "2021-05-19T07:00:07Z"
+  generation: 1
+  labels:
+    app: jupyterhub
+    app.kubernetes.io/managed-by: Helm
+    chart: jupyterhub-0.10.6
+    component: proxy
+    heritage: Helm
+    release: jhub
+  name: proxy
+  namespace: jhub
+  resourceVersion: "326859"
+  uid: 347d4755-55a9-49e4-bdd9-a07d26277382
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: jupyterhub
+      component: proxy
+      release: jhub
+status:
+  currentHealthy: 1
+  desiredHealthy: 1
+  disruptionsAllowed: 0
+  expectedPods: 1
+  observedGeneration: 1

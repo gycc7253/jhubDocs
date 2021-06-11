@@ -1,0 +1,130 @@
+hub:
+  config:
+    #JupyterHub:
+    #  authenticator_class: ldapauthenticator.LDAPAuthenticator
+    #LDAPAuthenticator:
+    #  bind_dn_template:
+    #    - cn={username},ou=edir,ou=people,ou=EXAMPLE-UNIT,o=EXAMPLE
+    #  server_address: ldap.EXAMPLE.org
+    DummyAuthenticator:
+      admin_users:
+        - user1
+        - user2
+      allowed_users:
+        - user3
+        - user4
+        - user5
+        - user6
+        - user7
+      blocked_users:
+        - user8
+        - user9
+    DummyAuthenticator:
+      password: jhubpassword
+    JupyterHub:
+      authenticator_class: dummy
+  #nodeSelector:
+  #  distype: ssd
+  #  nodetype: awesome
+
+scheduling:
+  #userScheduler:
+  #  enabled: true
+  podPriority:
+    enabled: true
+  userPlaceholder:
+    enabled: true
+    replicas: 4
+  #userPods:
+  #  nodeAffinity:
+  #    matchNodePurpose: require
+
+cull:
+  enabled: true
+  timeout: 3600
+  every: 300
+
+singleuser:
+  cpu:
+    limit: 1
+    guarantee: 0.1
+  memory:
+    limit: 3G
+    guarantee: 1G
+  image:
+    name: jupyter/base-notebook
+    tag: ubuntu-18.04
+  #nodeSelector:
+  #  beta.kubernetes.io/instance-type: t2.medium
+  profileList:
+    - display_name: "Minimal environment"
+      description: "To avoid too much bells and whistles: Python."
+      kubespawner_override:
+        image: jupyter/minimal-notebook:latest
+    - display_name: "Base env"
+      description: "Base env"
+      default: true
+    - display_name: "Datascience environment"
+      description: "If you want the additional bells and whistles: Python, R, and Julia."
+      kubespawner_override:
+        image: jupyter/datascience-notebook:2343e33dec46
+
+proxy:
+  https:
+    enabled: true
+    type: manual
+    manual:
+      key: |
+        -----BEGIN PRIVATE KEY-----
+        MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC+r3rGTwvTfMNO
+        HuM4eDAK9xpDKCG7sEYdhYrZ5cuws9OhKBwCduFZpsTRzll/HhBGVtCjHIAuWBcf
+        7GQk7NfbULgGuBO5REbLDSUho4VnVzmp+jpkNV4vjVgHF4htxiM3YChipcq2ODht
+        cZn4LVKP9a3RTYsQwiqvZes5LNzJgxZlE5yTWeNH2iT6/RgzKZiYb/PwNCzFRd0c
+        qcghGMqjPQQpKGNSWkhZF22OKuptLNsvcD3EnuhD3hs22dSh4VaP27UW0ae6U8vC
+        7i4VRHqADbFQGbjRv13tecG7R5fiIO/5xnmC/EjbWzaMVQN0WjHLYM2lRoxXlphz
+        PpD67765AgMBAAECggEAGblAfcoiFUiqbDp8epy0FnaZQ2ABlPlFrCvcvGJkpRTN
+        QttPVAHHirmVqZwFtMFQfrytbqOkoxvdGsBgDh8pS3vLJ5TjjEWqqy+9x5jwoS1C
+        KS0JfYU5jH6r1mEVVYG6NHkzWYN2IjjZW+JMXA95KNSCu06TqRIYggrkvZTQwBpE
+        ZWdbtNAMAM7E9m4XXI35Onrvz9yFK7KUZqIOaY7EHIcnTSDc0g+tsnIkQVv9THJp
+        bh4JMBoyxwyiv2XfDCMa5vG+sacNbJt7llUt+iwWm/gZl1f4+BnKB3jies52iO8D
+        TbtqnZigeII+YuZVqf5belxgzxbna3qFDuVog1hA0QKBgQDiLd00Zpr4/SzjxNRP
+        +vrFFJJaBk6AqJFEjus0R7+DsocBwtFV3/MCtHwWbBPRbDGtyv2FlUfmkZrMT79O
+        /EIS4+l3NglPvPqy2Zzq3iZ2mnVW+4OMEoXGlJqGktk0BcHqf9rSAwoS3W1a9RAI
+        97k1E16xwgFZajSVVdyAiEoVfQKBgQDX05xqbawZYN0YwRawzeeZyus7JYIIpjIe
+        COGOGRNjDExiARrpkpaJBR8viSqfuTUmmfIAT3DeKP/gJSNtd+zWGcldxqvvhrfO
+        h120ZOUQqi+S5cjeIRpuR6y0SjIQmdB+OuudgnVSXWfD/NODNSLIhO8b383McN+x
+        0r/8VKBi7QKBgQDIug9gm9bZNkcKdPo/aOv4z8L6pjIxOGiDwZq3sR0kEeKDC5Sg
+        c7nFIswlUhFcgHquVEIetVc0JvCMdhHAVVuGTEI8C/bDj2GmLD54qmLUS0vrwBcE
+        zsNucx+YYubkpl9sb7+RNiVQjLaqTGbIrqDtm50kgJqV8g1souCoKUwmOQKBgFoy
+        kLMV5I+yoJQg1hfL5Zera0WLtl1g/573vTQCnMyPLjjjF1k4LvtSjabzH0IjR+g6
+        /B1PFe9ymQUW4Eh2jx8nJbWwOtjep2CDyBCE/gpJ5ZnxuFHE6ePexnmObH/tmGm4
+        vBFWnStv59bLiaXTBhdhHwC6NqrTHVmWpy+QOns9AoGAGTgHqgm18e1z9V+fczYd
+        oz+sk2l0ny79XUUVX15pnzqqlNZXrZyrX8pxAsGhGhAzkurbvS0UMnk7JVDSzLAr
+        ZJKKl7nIuYT7tIAwNVscFI9bCFPEQ9eFCULKfSwm+LD6xHQebGD1l9BS/5dJkBsj
+        1jG/13ptS91iD+aff/kALXU=
+        -----END PRIVATE KEY-----
+      cert: |
+        -----BEGIN CERTIFICATE-----
+        MIID5TCCAs2gAwIBAgIUDvf0dgVhU6UttPv2RkM7lWLuT/IwDQYJKoZIhvcNAQEL
+        BQAwgYExCzAJBgNVBAYTAlNHMRIwEAYDVQQIDAlTaW5nYXBvcmUxEjAQBgNVBAcM
+        CVNpbmdhcG9yZTEMMAoGA1UECgwDTlVTMQswCQYDVQQLDAJJVDENMAsGA1UEAwwE
+        R3ljYzEgMB4GCSqGSIb3DQEJARYRZ3VvNzI1M0BnbWFpbC5jb20wHhcNMjEwNTI1
+        MDcwNjE5WhcNMjIwNTI1MDcwNjE5WjCBgTELMAkGA1UEBhMCU0cxEjAQBgNVBAgM
+        CVNpbmdhcG9yZTESMBAGA1UEBwwJU2luZ2Fwb3JlMQwwCgYDVQQKDANOVVMxCzAJ
+        BgNVBAsMAklUMQ0wCwYDVQQDDARHeWNjMSAwHgYJKoZIhvcNAQkBFhFndW83MjUz
+        QGdtYWlsLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAL6vesZP
+        C9N8w04e4zh4MAr3GkMoIbuwRh2Fitnly7Cz06EoHAJ24VmmxNHOWX8eEEZW0KMc
+        gC5YFx/sZCTs19tQuAa4E7lERssNJSGjhWdXOan6OmQ1Xi+NWAcXiG3GIzdgKGKl
+        yrY4OG1xmfgtUo/1rdFNixDCKq9l6zks3MmDFmUTnJNZ40faJPr9GDMpmJhv8/A0
+        LMVF3RypyCEYyqM9BCkoY1JaSFkXbY4q6m0s2y9wPcSe6EPeGzbZ1KHhVo/btRbR
+        p7pTy8LuLhVEeoANsVAZuNG/Xe15wbtHl+Ig7/nGeYL8SNtbNoxVA3RaMctgzaVG
+        jFeWmHM+kPrvvrkCAwEAAaNTMFEwHQYDVR0OBBYEFDFzpdgRjMUqe2DkFYsN004v
+        WXYcMB8GA1UdIwQYMBaAFDFzpdgRjMUqe2DkFYsN004vWXYcMA8GA1UdEwEB/wQF
+        MAMBAf8wDQYJKoZIhvcNAQELBQADggEBAF4VM5dHPJ5ShmAzqVdTHDcO29fHd5Mo
+        tWEmub0QyVdgUkjAcrF6WBYbQP+xePS4cZvihiHmWempIfu5SyS04/4IBzDNTEIZ
+        L2qQNX0a+pGVJgfaf0CReoHzfjteSW53Tywd+jfsDeAunvPQ7ezWxrNRBJRi+Uvj
+        Pc7e/IrVuJo8kyS2YIO0dlpJAI9wQeijCZiBffugCrLtlsRP6GPEbvnlD9j3itzY
+        ZV/ADS6/uk+x+nT/2NSBE9Z7Zb2JhC7FcPm7UDTP8Ys9srxUZRjl8zmj8hSAqe+4
+        ashO4LtJ3AqGYQlxF+S2oUeRe21Agq6RjAQ+NVWH1L3FWr6oPWbJmko=
+        -----END CERTIFICATE-----
+  secretToken: "99ee05f3413c5e467e720dc7226b7b17454b0fa82353f669479ec9b2f298736a"

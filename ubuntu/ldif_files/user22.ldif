@@ -1,0 +1,17 @@
+dn: uid=user22,ou=user,o=hpc,dc=control,dc=ap-southeast-1,dc=compute,dc=internal
+objectClass: top
+objectClass: account
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: user22
+uid: user22
+uidNumber: 16860
+gidNumber: 100
+homeDirectory: /home/user22
+loginShell: /bin/bash
+gecos: user22
+userPassword: {crypt}x
+shadowLastChange: 0
+shadowMax: 0
+shadowWarning: 0
+

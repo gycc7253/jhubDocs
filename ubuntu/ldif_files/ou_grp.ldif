@@ -1,0 +1,3 @@
+dn: ou=groups,o=hpc,dc=control,dc=ap-southeast-1,dc=compute,dc=internal
+objectClass: organizationalUnit
+ou: groups
